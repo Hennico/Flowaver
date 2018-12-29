@@ -10,22 +10,27 @@ namespace Flowaver
             int tamX = 55;
             int tamY = 31;
             int largo = 200;
+
+            char piso = '·';
+            char pared = '#';
+            char personaje = '@';
+
             Console.WindowWidth = tamX + 2;
             Console.WindowHeight = tamY + 3;
 
-            Plano<char> mapa = PlanoFactory<char>.GenerarLaberintoMirror(tamX, tamY, tamX / 2, tamY / 2, largo, '·', '#');
+            Plano<char> mapa = PlanoFactory<char>.GenerarLaberintoMirror(tamX, tamY, tamX / 2, tamY / 2, largo, piso, pared);
 
             ConsoleKey tecla = ConsoleKey.Pa1;
             int[] posicion = new int[] { tamX / 2, tamY /2 };
-            mapa.Agregar(posicion[0], posicion[1],'@');
+            mapa.Agregar(posicion[0], posicion[1],personaje);
             do
             {
                 switch (tecla)
                 {
-                    case ConsoleKey.UpArrow   : MoverPJ(mapa, posicion,  0, -1); break;
-                    case ConsoleKey.DownArrow : MoverPJ(mapa, posicion,  0, +1); break;
-                    case ConsoleKey.LeftArrow : MoverPJ(mapa, posicion, -1,  0); break;
-                    case ConsoleKey.RightArrow: MoverPJ(mapa, posicion, +1,  0); break;
+                    case ConsoleKey.UpArrow   : MoverPJ(mapa, personaje, posicion,  0, -1); break;
+                    case ConsoleKey.DownArrow : MoverPJ(mapa, personaje, posicion,  0, +1); break;
+                    case ConsoleKey.LeftArrow : MoverPJ(mapa, personaje, posicion, -1,  0); break;
+                    case ConsoleKey.RightArrow: MoverPJ(mapa, personaje, posicion, +1,  0); break;
                 }
 
                 Console.Clear();
@@ -35,19 +40,19 @@ namespace Flowaver
             while (tecla != ConsoleKey.Spacebar);
         }
 
-        public static void MoverPJ(Plano<char> mapa, int[] posicion, int deltaX, int deltaY)
+        public static void MoverPJ(Plano<char> mapa, char personaje, int[] posicion, int deltaX, int deltaY)
         {
             int j = 0;
             char[] contenidos = mapa[posicion[0], posicion[1]];
             char[] nuevosContenidos = new char[contenidos.Length - 1];
             for (int i = 0; i < contenidos.Length; i++)
-                if (contenidos[i] != '@')
+                if (contenidos[i] != personaje)
                     nuevosContenidos[j++] = contenidos[i];
             
             mapa[posicion[0], posicion[1]] = nuevosContenidos;
             posicion[0] += deltaX;
             posicion[1] += deltaY;
-            mapa.Agregar(posicion[0], posicion[1], '@');
+            mapa.Agregar(posicion[0], posicion[1], personaje);
         }
 
         public static void showMapa(Plano<char> mapa)
