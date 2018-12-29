@@ -13,11 +13,11 @@ namespace Flowaver
             Console.WindowWidth = tamX + 2;
             Console.WindowHeight = tamY + 3;
 
-            Plano<char> mapa = PlanoFactory<char>.GenerarLaberintoMirror(tamX, tamY, tamX / 2, tamY / 2, largo, ' ', '#');
+            Plano<char> mapa = PlanoFactory<char>.GenerarLaberintoMirror(tamX, tamY, tamX / 2, tamY / 2, largo, '·', '#');
 
             ConsoleKey tecla = ConsoleKey.Pa1;
             int[] posicion = new int[] { tamX / 2, tamY /2 };
-            mapa[posicion[0], posicion[1]] = new char[] { '@' };
+            mapa.Agregar(posicion[0], posicion[1],'@');
             do
             {
                 switch (tecla)
@@ -37,10 +37,17 @@ namespace Flowaver
 
         public static void MoverPJ(Plano<char> mapa, int[] posicion, int deltaX, int deltaY)
         {
-            mapa[posicion[0], posicion[1]] = new char[] { ' ' };
+            int j = 0;
+            char[] contenidos = mapa[posicion[0], posicion[1]];
+            char[] nuevosContenidos = new char[contenidos.Length - 1];
+            for (int i = 0; i < contenidos.Length; i++)
+                if (contenidos[i] != '@')
+                    nuevosContenidos[j++] = contenidos[i];
+            
+            mapa[posicion[0], posicion[1]] = nuevosContenidos;
             posicion[0] += deltaX;
             posicion[1] += deltaY;
-            mapa[posicion[0], posicion[1]] = new char[] { '@' };
+            mapa.Agregar(posicion[0], posicion[1], '@');
         }
 
         public static void showMapa(Plano<char> mapa)
@@ -52,7 +59,7 @@ namespace Flowaver
             {
                 Console.Write("|");
                 for (int i = 0; i < mapa.Ancho; i++)
-                    Console.Write(mapa[i, j].Length > 0 ? mapa[i, j][0] : ' ');
+                    Console.Write(mapa[i, j].Length > 0 ? mapa[i, j][mapa[i, j].Length-1] : ' ');
                 Console.WriteLine("|");
             }
 
