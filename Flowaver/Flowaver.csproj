@@ -48,10 +48,10 @@
     <Compile Include="src\DataMundo\Posicion.cs" />
     <Compile Include="src\Esenario\Pared.cs" />
     <Compile Include="src\IUbicable.cs" />
-    <Compile Include="src\Planos\AmuradorDeCaminos.cs" />
-    <Compile Include="src\Planos\CaminoLaberintico.cs" />
-    <Compile Include="src\Planos\EspejarCamino.cs" />
-    <Compile Include="src\Planos\ITerraformador.cs" />
+    <Compile Include="src\Planos\Terraformadores\AmuradorDeCaminos.cs" />
+    <Compile Include="src\Planos\Terraformadores\CaminoLaberintico.cs" />
+    <Compile Include="src\Planos\Terraformadores\EspejarCamino.cs" />
+    <Compile Include="src\Planos\Terraformadores\ITerraformador.cs" />
     <Compile Include="src\Planos\Plano.cs" />
     <Compile Include="src\Planos\PlanoFactory.cs" />
   </ItemGroup>
