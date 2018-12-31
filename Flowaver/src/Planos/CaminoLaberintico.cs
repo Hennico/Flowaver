@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Planos
+namespace Flowaver.Planos
 {
     internal class CaminoLaberintico<T> : ITerraformador<T>
     {

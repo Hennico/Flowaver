@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Planos
+namespace Flowaver.Planos
 {
     public class Plano<T>
     {
@@ -50,6 +50,28 @@ namespace Planos
         {
             if (PosicionValida(x, y))
                 grilla[x][y].Add(valor);
+        }
+
+        public void Remover(int x, int y, T valor)
+        {
+            if (PosicionValida(x, y))
+                grilla[x][y].Remove(valor);
+        }
+        public void Remover(int x, int y, T valor, Func<T,T,bool> comparador)
+        {
+            if (PosicionValida(x, y))
+            {
+                List<T> actual = new List<T>(grilla[x][y]);
+                grilla[x][y] = new List<T>();
+                foreach (T item in actual)
+                {
+                    if (!comparador(valor, item))
+                    {
+                        grilla[x][y].Add(item);
+                        break;
+                    }
+                }
+            }
         }
 
         public bool PosicionValida(int x, int y)

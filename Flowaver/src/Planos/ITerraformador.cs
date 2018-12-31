@@ -1,4 +1,4 @@
-﻿namespace Planos
+﻿namespace Flowaver.Planos
 {
     public interface ITerraformador<T>
     {

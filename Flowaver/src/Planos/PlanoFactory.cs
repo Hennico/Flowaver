@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Planos
+namespace Flowaver.Planos
 {
     public static class PlanoFactory<T>
     {
@@ -37,11 +37,10 @@ namespace Planos
             return plano;
         }
 
-        public static Plano<T> GenerarLaberintoMirror(int ancho, int alto, int xIni, int yIni, int largo, T piso, T pared)
+        public static Plano<T> GenerarLaberintoMirror(int ancho, int alto, int xIni, int yIni, int largo, Random direcciones, T piso, T pared)
         {
             Plano<T> plano = new Plano<T>(ancho, alto);
 
-            Random direcciones = new Random();
             int direccion = direcciones.Next(4);
             int x = xIni;
             int y = yIni;
@@ -63,7 +62,8 @@ namespace Planos
                 y += deltaY(direccion);
                 direccion = direcciones.Next(4);
             }
-            CopiarEnEspejo(plano, piso);
+            CopiarEnEspejo(plano, piso, true, false);
+            CopiarEnEspejo(plano, piso, false, true);
 
             AgregarParedes(plano, piso, pared);
             //LimpiarColumnas(plano, piso, pared);
@@ -71,7 +71,7 @@ namespace Planos
             return plano;
         }
 
-        private static void CopiarEnEspejo(Plano<T> plano, T piso)
+        private static void CopiarEnEspejo(Plano<T> plano, T piso, bool horizontal, bool vertical)
         {
             for (int x = 0; x < plano.Ancho; x++)
             {
@@ -79,8 +79,9 @@ namespace Planos
                 {
                     if (plano.LugarVacio(x, y))
                     {
-                        int yNew = plano.Alto / 2 - (y - plano.Alto / 2);
-                        if (plano.LugarOcupado(x, yNew, piso))
+                        int xNew = horizontal ? plano.Ancho / 2 - (x - plano.Ancho / 2) : x;
+                        int yNew = vertical ? plano.Alto / 2 - (y - plano.Alto / 2) : y;
+                        if (plano.LugarOcupado(xNew, yNew, piso))
                             plano.Agregar(x, y, piso);
                     }
                 }

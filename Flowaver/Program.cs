@@ -1,5 +1,6 @@
 ﻿using System;
-using Planos;
+using Flowaver.Planos;
+using Flowaver.DataMundo;
 
 namespace Flowaver
 {
@@ -7,6 +8,7 @@ namespace Flowaver
     {
         static void Main(string[] args)
         {
+            Random mapaRnd = new Random();
             int tamX = 55;
             int tamY = 31;
             int largo = 200;
@@ -18,41 +20,47 @@ namespace Flowaver
             Console.WindowWidth = tamX + 2;
             Console.WindowHeight = tamY + 3;
 
-            Plano<char> mapa = PlanoFactory<char>.GenerarLaberintoMirror(tamX, tamY, tamX / 2, tamY / 2, largo, piso, pared);
+            int xIni = tamX/2;
+            int yIni = mapaRnd.Next(tamY - 2) + 1;
+            Plano<char> mapa = PlanoFactory<char>.GenerarLaberintoMirror(tamX, tamY, xIni, yIni, largo, mapaRnd, piso, pared);
 
             ConsoleKey tecla = ConsoleKey.Pa1;
-            int[] posicion = new int[] { tamX / 2, tamY /2 };
-            mapa.Agregar(posicion[0], posicion[1],personaje);
+            Posicion posicion = new Posicion(xIni, yIni);
+            mapa.Agregar(posicion.x, posicion.y,personaje);
             do
             {
                 switch (tecla)
                 {
-                    case ConsoleKey.UpArrow   : MoverPJ(mapa, personaje, posicion,  0, -1); break;
-                    case ConsoleKey.DownArrow : MoverPJ(mapa, personaje, posicion,  0, +1); break;
-                    case ConsoleKey.LeftArrow : MoverPJ(mapa, personaje, posicion, -1,  0); break;
-                    case ConsoleKey.RightArrow: MoverPJ(mapa, personaje, posicion, +1,  0); break;
+                    case ConsoleKey.UpArrow   : MoverPJ(mapa, personaje, pared, posicion,  0, -1); break;
+                    case ConsoleKey.DownArrow : MoverPJ(mapa, personaje, pared, posicion,  0, +1); break;
+                    case ConsoleKey.LeftArrow : MoverPJ(mapa, personaje, pared, posicion, -1,  0); break;
+                    case ConsoleKey.RightArrow: MoverPJ(mapa, personaje, pared, posicion, +1,  0); break;
+
+                    case ConsoleKey.R:
+                        xIni = tamX / 2;
+                        yIni = mapaRnd.Next(tamY - 2) + 1;
+                        mapa = PlanoFactory<char>.GenerarLaberintoMirror(tamX, tamY, xIni, yIni, largo, mapaRnd, piso, pared);
+                        posicion = new Posicion(xIni, yIni);
+                        mapa.Agregar(posicion.x, posicion.y, personaje);
+                        break;
                 }
 
-                Console.Clear();
+                Console.SetCursorPosition(0,0);
                 showMapa(mapa);
                 tecla = Console.ReadKey().Key;
             }
             while (tecla != ConsoleKey.Spacebar);
         }
 
-        public static void MoverPJ(Plano<char> mapa, char personaje, int[] posicion, int deltaX, int deltaY)
+        public static void MoverPJ(Plano<char> mapa, char personaje, char pared, Posicion posicion, int deltaX, int deltaY)
         {
-            int j = 0;
-            char[] contenidos = mapa[posicion[0], posicion[1]];
-            char[] nuevosContenidos = new char[contenidos.Length - 1];
-            for (int i = 0; i < contenidos.Length; i++)
-                if (contenidos[i] != personaje)
-                    nuevosContenidos[j++] = contenidos[i];
-            
-            mapa[posicion[0], posicion[1]] = nuevosContenidos;
-            posicion[0] += deltaX;
-            posicion[1] += deltaY;
-            mapa.Agregar(posicion[0], posicion[1], personaje);
+            if (!mapa.LugarOcupado(posicion.x + deltaX, posicion.y + deltaY, pared))
+            {
+                mapa.Remover(posicion.x, posicion.y, personaje);
+                posicion.x += deltaX;
+                posicion.y += deltaY;
+                mapa.Agregar(posicion.x, posicion.y, personaje);
+            }
         }
 
         public static void showMapa(Plano<char> mapa)
