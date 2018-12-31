@@ -54,6 +54,7 @@
     <Compile Include="src\Planos\Terraformadores\ITerraformador.cs" />
     <Compile Include="src\Planos\Plano.cs" />
     <Compile Include="src\Planos\PlanoFactory.cs" />
+    <Compile Include="src\Planos\Terraformadores\LimpiarColumnas.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
