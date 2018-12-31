@@ -15,7 +15,19 @@
 
         public void Terraformar(Plano<T> plano)
         {
-
+            for (int x = 0; x < plano.Ancho; x++)
+            {
+                for (int y = 0; y < plano.Alto; y++)
+                {
+                    if (plano.LugarVacio(x, y))
+                    {
+                        int xNew = horizontal ? plano.Ancho / 2 - (x - plano.Ancho / 2) : x;
+                        int yNew = vertical ? plano.Alto / 2 - (y - plano.Alto / 2) : y;
+                        if (plano.LugarOcupado(xNew, yNew, piso))
+                            plano.Agregar(x, y, piso);
+                    }
+                }
+            }
         }
     }
 }
