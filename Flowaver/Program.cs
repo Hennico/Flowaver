@@ -9,8 +9,8 @@ namespace Flowaver
         static void Main(string[] args)
         {
             Random mapaRnd = new Random();
-            int tamX = 55;
-            int tamY = 31;
+            int tamX = 100;
+            int tamY = 50;
             int largo = 200;
 
             char piso = '·';
@@ -20,9 +20,16 @@ namespace Flowaver
             Console.WindowWidth = tamX + 2;
             Console.WindowHeight = tamY + 3;
 
-            int xIni = tamX/2;
+            int xIni = mapaRnd.Next(tamX - 2) + 1;
             int yIni = mapaRnd.Next(tamY - 2) + 1;
-            Plano<char> mapa = PlanoFactory<char>.GenerarLaberintoMirror(tamX, tamY, xIni, yIni, largo, mapaRnd, piso, pared);
+
+            Plano<char> mapa = new Plano<char>(tamX, tamY, new ITerraformador<char>[] {
+                new CaminoLaberintico<char>(xIni, yIni, largo, piso, mapaRnd),
+                new EspejarCamino<char>(piso, true, false),
+                //new EspejarCamino<char>(piso, false, true),
+                new AmuradorDeCaminos<char>(piso, pared)
+            });
+            //Plano<char> mapa = PlanoFactory<char>.GenerarLaberintoMirror(tamX, tamY, xIni, yIni, largo, mapaRnd, piso, pared);
 
             ConsoleKey tecla = ConsoleKey.Pa1;
             Posicion posicion = new Posicion(xIni, yIni);
@@ -37,7 +44,7 @@ namespace Flowaver
                     case ConsoleKey.RightArrow: MoverPJ(mapa, personaje, pared, posicion, +1,  0); break;
 
                     case ConsoleKey.R:
-                        xIni = tamX / 2;
+                        xIni = mapaRnd.Next(tamX - 2) + 1;
                         yIni = mapaRnd.Next(tamY - 2) + 1;
                         mapa = PlanoFactory<char>.GenerarLaberintoMirror(tamX, tamY, xIni, yIni, largo, mapaRnd, piso, pared);
                         posicion = new Posicion(xIni, yIni);

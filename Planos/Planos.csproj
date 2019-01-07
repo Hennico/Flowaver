@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0DBF678D-B4C9-42EC-9E20-29A81C8EAD78}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{5E2E5B6B-3743-4B9A-AC8A-74D219E1AEC3}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Flowaver</RootNamespace>
-    <AssemblyName>Flowaver</AssemblyName>
+    <RootNamespace>Planos</RootNamespace>
+    <AssemblyName>Planos</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,23 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Plano.cs" />
+    <Compile Include="PlanoFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\DataMundo\Posicion.cs" />
-    <Compile Include="src\Esenario\Pared.cs" />
-    <Compile Include="src\IUbicable.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Planos\Planos.csproj">
-      <Project>{5e2e5b6b-3743-4b9a-ac8a-74d219e1aec3}</Project>
-      <Name>Planos</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\Planos\" />
+    <Compile Include="Terraformadores\AmuradorDeCaminos.cs" />
+    <Compile Include="Terraformadores\CaminoLaberintico.cs" />
+    <Compile Include="Terraformadores\EspejarCamino.cs" />
+    <Compile Include="Terraformadores\ITerraformador.cs" />
+    <Compile Include="Terraformadores\LimpiarColumnas.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,6 +1,6 @@
 ﻿namespace Flowaver.Planos
 {
-    class EspejarCamino<T> : ITerraformador<T>
+    public class EspejarCamino<T> : ITerraformador<T>
     {
         private T piso;
         private bool vertical;

@@ -2,7 +2,7 @@
 
 namespace Flowaver.Planos
 {
-    internal class CaminoLaberintico<T> : ITerraformador<T>
+    public class CaminoLaberintico<T> : ITerraformador<T>
     {
         private T piso;
         private int xIni;

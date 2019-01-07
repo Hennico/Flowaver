@@ -1,6 +1,6 @@
 ﻿namespace Flowaver.Planos
 {
-    class LimpiarColumnas<T> : ITerraformador<T>
+    public class LimpiarColumnas<T> : ITerraformador<T>
     {
         private T piso;
         private T pared;

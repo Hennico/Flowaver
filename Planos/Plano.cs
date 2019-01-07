@@ -22,6 +22,12 @@ namespace Flowaver.Planos
                 grilla[i % ancho][i / ancho] = new List<T>();
         }
 
+        public Plano(int ancho, int alto, ICollection<ITerraformador<T>> terraformadores) : this(ancho, alto)
+        {
+            foreach (ITerraformador<T> terraformador in terraformadores)
+                terraformador.Terraformar(this);
+        }
+
         public T[] this[int x, int y]
         {
             get
